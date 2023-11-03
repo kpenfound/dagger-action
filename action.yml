@@ -26,6 +26,8 @@ runs:
   steps:
     - run: cd /usr/local && { curl -L https://dl.dagger.io/dagger/install.sh | DAGGER_VERSION=${{ inputs.version }} sh; cd -; }
       shell: bash
+    - run: echo $GITHUB_SHA
+      shell: bash
     - run: DAGGER_CLOUD_TOKEN=${{ inputs.cloud-token }} /usr/local/bin/dagger -s ${{ inputs.verb }} -m ${{ inputs.module }} ${{ inputs.args }}
       shell: bash
     - run: docker stop -t 300 $(docker ps --filter name="dagger-engine-*" -q)
