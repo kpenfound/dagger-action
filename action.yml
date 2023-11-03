@@ -30,5 +30,5 @@ runs:
       shell: bash
     - run: docker stop -t 300 $(docker ps --filter name="dagger-engine-*" -q)
       shell: bash
-      if: always
+      if: ${{ always() }}
 
