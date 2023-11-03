@@ -28,6 +28,8 @@ runs:
       shell: bash
     - run: echo $GITHUB_SHA
       shell: bash
+    - run: env
+      shell: bash
     - run: DAGGER_CLOUD_TOKEN=${{ inputs.cloud-token }} /usr/local/bin/dagger -s ${{ inputs.verb }} -m ${{ inputs.module }} ${{ inputs.args }}
       shell: bash
     - run: docker stop -t 300 $(docker ps --filter name="dagger-engine-*" -q)
