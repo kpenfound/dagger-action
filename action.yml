@@ -5,6 +5,10 @@ inputs:
     description: 'Dagger Version'
     required: false
     default: '0.9.2'
+  dagger-flags:
+    description: 'Dagger CLI Flags'
+    required: false
+    default: '-s'
   verb:
     description: 'CLI verb (call, download, up, functions, shell, query)'
     required: false
@@ -28,7 +32,7 @@ runs:
       shell: bash
     - run: if ! [ -d ./.git ]; then git clone -b ${GITHUB_REF_NAME} --no-checkout https://github.com/${GITHUB_REPOSITORY} .; fi
       shell: bash
-    - run: DAGGER_CLOUD_TOKEN=${{ inputs.cloud-token }} /usr/local/bin/dagger -s ${{ inputs.verb }} -m ${{ inputs.module }} ${{ inputs.args }}
+    - run: DAGGER_CLOUD_TOKEN=${{ inputs.cloud-token }} /usr/local/bin/dagger ${{ inputs.dagger-flags }} ${{ inputs.verb }} -m ${{ inputs.module }} ${{ inputs.args }}
       shell: bash
     - run: docker stop -t 300 $(docker ps --filter name="dagger-engine-*" -q)
       shell: bash
